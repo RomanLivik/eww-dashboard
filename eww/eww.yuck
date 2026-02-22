@@ -1,0 +1,61 @@
+;; Matrix using defpoll for stability
+(defpoll matrix_text :interval "150ms" "./scripts/matrix.sh")
+
+(defpoll time :interval "1s" "date '+%H:%M'")
+(defpoll date :interval "60s" "date '+%d %b %Y'")
+(defpoll music_title :interval "1s" "playerctl metadata --format '{{title}}' || echo 'No Music'")
+(defpoll music_artist :interval "1s" "playerctl metadata --format '{{artist}}' || echo 'Offline'")
+
+(defwindow dashboard
+  :monitor 0
+  :geometry (geometry :x "0%" :y "0%" :width "1200px" :height "520px" :anchor "center center")
+  :stacking "bottom"
+  (dashboard_layout))
+
+(defwidget dashboard_layout []
+  (box :class "main-container" :orientation "v" :spacing 20
+    
+    ;; TOP ROW (4 EQUAL TILES)
+    (box :orientation "h" :spacing 20 :space-evenly true
+      (box :class "card" :width 280 :height 230
+        (label :text matrix_text :class "matrix-lbl" :justify "center"))
+      
+      (box :class "card" :width 280 :height 230 :orientation "v" :valign "center"
+        (label :text time :class "clock-h1")
+        (label :text date :class "clock-h2"))
+      
+      (box :class "card" :width 280 :height 230
+        (circular-progress :value {EWW_CPU.avg} :thickness 15 :class "r-cpu" 
+          (label :text "" :class "r-ico")))
+          
+      (box :class "card" :width 280 :height 230
+        (circular-progress :value {EWW_RAM.used_mem_perc} :thickness 15 :class "r-ram" 
+          (label :text "󰘚" :class "r-ico"))))
+
+    ;; BOTTOM ROW (4 EQUAL TILES)
+    (box :orientation "h" :spacing 20 :space-evenly true
+      (box :class "card" :width 280 :height 230 :spacing 20
+        (label :text "" :class "os-icon-large")
+        (box :orientation "v" :valign "center" :halign "start"
+          (label :text "kurwarchik~>" :class "neo-title")
+          (label :text "ThinkPad L13" :class "neo-sub")))
+
+      ;; APPS GRID - SAME SIZE AS OTHERS
+      (box :class "card" :width 280 :height 230 :orientation "v" :valign "center" :spacing 25
+        (box :spacing 40 :halign "center"
+          (button :onclick "telegram-desktop &" (label :text "󰭹" :class "app-btn"))
+          (button :onclick "steam &" (label :text "󰓓" :class "app-btn")))
+        (box :spacing 40 :halign "center"
+          (button :onclick "code &" (label :text "󰨞" :class "app-btn"))
+          (button :onclick "kitty &" (label :text "" :class "app-btn"))))
+
+      (button :class "card" :width 280 :height 230 :onclick "playerctl play-pause"
+        (box :orientation "v" :spacing 15 :valign "center"
+          (label :text "󰎆" :class "play-icon")
+          (label :text music_title :class "play-title" :limit-width 15)
+          (label :text music_artist :class "play-artist" :limit-width 15)))
+
+      (box :class "card" :width 280 :height 230
+        (circular-progress :value {(EWW_DISK["/"].used_perc)} :thickness 15 :class "r-disk" 
+          (label :text "󰋊" :class "r-ico"))))
+  ))

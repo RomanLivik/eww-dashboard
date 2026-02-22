@@ -1,0 +1,59 @@
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font";
+}
+
+.main-container {
+  background-color: transparent;
+  padding: 10px;
+}
+
+.card {
+  background-color: rgba(16, 16, 16, 0.98);
+  border: 1px solid #333333;
+  border-radius: 12px;
+}
+
+/* Matrix Styling */
+.matrix-lbl {
+  color: #ffffff;
+  font-size: 14px;
+  opacity: 0.6;
+  font-family: "monospace";
+}
+
+/* Clock Styling */
+.clock-h1 {
+  font-size: 70px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.clock-h2 {
+  font-size: 18px;
+  color: #666666;
+}
+
+/* Apps Grid Styling */
+.app-btn {
+  font-size: 44px;
+  color: #ffffff;
+}
+.app-btn:hover {
+  color: #888888;
+}
+
+/* Progress Rings Styling */
+.r-cpu { color: #ffffff; background-color: #222222; }
+.r-ram { color: #dddddd; background-color: #222222; }
+.r-disk { color: #aaaaaa; background-color: #222222; }
+.r-ico { font-size: 36px; color: #ffffff; }
+
+/* OS Info Styling */
+.os-icon-large { font-size: 60px; color: #ffffff; }
+.neo-title { font-weight: bold; font-size: 16px; color: #ffffff; }
+.neo-sub { font-size: 13px; color: #888888; }
+
+/* Player Styling */
+.play-icon { font-size: 40px; color: #ffffff; }
+.play-title { font-weight: bold; font-size: 15px; color: #ffffff; }
+.play-artist { font-size: 13px; color: #777777; }
